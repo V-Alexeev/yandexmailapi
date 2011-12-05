@@ -1,0 +1,7 @@
+== What is it ==
+
+It is a simple Python wrapper for Yandex Mail For Domain API.
+
+(https://pdd.yandex.ru/help/section72/)
+
+For documentation on the module, look into the source, it's pretty self-explaining.
