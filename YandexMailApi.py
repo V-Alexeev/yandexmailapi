@@ -144,7 +144,7 @@ class YandexMailApi(object):
             def parseXml(xml, template):
                 result = {}
                 for tag_name in template:
-                    tags = list(xml.iter(tag_name))
+                    tags = list(xml.getiterator(tag_name))
                     if not tags:
                         result[tag_name] = None
                     elif template[tag_name] is int:
