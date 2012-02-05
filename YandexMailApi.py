@@ -194,6 +194,8 @@ class YandexMailApi(object):
 ###################
 
 # Operations with users
+
+# Please note: login does not include domain
         
     def create_user(self, u_login, u_password):
         return self.run_command('reg_user_token', locals())
@@ -245,12 +247,24 @@ class YandexMailApi(object):
                          },
                     }))
 
-    def get_users_list(self, page = 1, perpage = 100):
+    def get_users_list(self, page = 0, on_page = 100):
+        """
+        Don't be fooled by Yandex API docs into thinking that page is really a page.
+        No, it just specifies how many users should be skipped.
+
+        That is, if you specify page=10, on_page=100, you will NOT get
+        users 1000-1100, as you would have thought. You would get users
+        10-110. To get users 1000-1100, you should have specified
+        page=1000, on_page=100.
+
+        Oh, and Yandex docs say that page should default to 1. Of course
+        it shouldn't, or else you wouldn't get the first user.
+        """
         return self.run_command('get_domain_users', locals(),
             response_handler=self.response_handler_factory(
                     {'emails':
                         {'action-status': unicode,
-                        'email': [{'name': unicode}],
+                        'email': [{'name': unicode}], # Yandex API docs say that this field is named "email-name", not just "name", but it's a lie :(
                         'found': int,
                         'total': int,
                         },
