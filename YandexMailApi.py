@@ -400,3 +400,39 @@ class YandexMailApi(object):
             {
                 'name': unicode,
             }))
+
+    # Operations with DKIM
+
+    def dkim_enable(self, domain):
+        return self.run_command('dkim/enable', locals(),
+            response_handler=self.response_handler_factory(
+            {
+                'name': unicode,
+                'dkim': {
+                    'enabled': unicode,
+                    'txtrecord': unicode
+                }
+            })
+        )
+
+    def dkim_status(self, domain):
+        return self.run_command('dkim/status', locals(),
+            response_handler=self.response_handler_factory(
+            {
+                'name': unicode,
+                'dkim': {
+                    'enabled': unicode,
+                    'txtrecord': unicode,
+                    'nsready': unicode,
+                    'mailready': unicode
+                }
+            })
+        )
+
+    def dkim_disable(self, domain):
+        return self.run_command('dkim/disable', locals(),
+            response_handler=self.response_handler_factory(
+            {
+                'name': unicode,
+            })
+        )
